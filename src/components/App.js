@@ -1,20 +1,20 @@
-import React from 'react'
-import Header from './Header';
-import Inventory from './Inventory';
-import Order from './Order';
+import React from "react";
+import Header from "./Header";
+import Order from "./Order";
+import Inventory from "./Inventory";
 
 class App extends React.Component {
   render() {
     return (
       <div className="catch-of-the-day">
         <div className="menu">
-          <Header tagline='Ryan is cool.'/> 
+          <Header tagline="Fresh Seafood Market"/>
         </div>
-        <Inventory/>
-        <Order/>
+        <Order />
+        <Inventory />
       </div>
-    )
-  }  
+    );
+  }
 }
 
 export default App;
