@@ -1,5 +1,6 @@
 import React from "react";
 
+// Example of a stateless functional component.
 const Header = props => (
   <header className="top">
     <h1>
