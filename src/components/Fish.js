@@ -1,7 +1,21 @@
 import React from "react";
+import PropTypes from "prop-types"
 import { formatPrice } from '../helpers';
 
 class Fish extends React.Component {
+
+  // .shape checks if the object that you are sending have these properties with these types.
+  static PropTypes = {
+    details:  PropTypes.shape({
+      image: PropTypes.string, 
+      name: PropTypes.string,
+      desc: PropTypes.string,
+      status: PropTypes.string,
+      price: PropTypes.number
+    }),
+    addToOrder: PropTypes.func,
+  }
+
   render() {
 
     // ES6 destructuring. Sets each individual detail to it's own variable.

@@ -1,7 +1,14 @@
 import React from 'react'; // You will always need to import React into your components.
 import { getFunName } from "../helpers";
+import PropTypes from "prop-types"
+
 
 class StorePicker extends React.Component {
+
+  static PropTypes = {
+    history: PropTypes.object
+  }
+
   // Property on the component made into a ref.
   storeName = React.createRef();
 
