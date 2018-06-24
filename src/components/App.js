@@ -47,6 +47,15 @@ class App extends React.Component {
     this.setState({ fishes });
   };
 
+  updateFish = (key, updatedFish) => {
+    // 1. Makes a copy of the existing state using an object spread.
+    const fishes = {...this.state.fishes};
+    // 2. Update the state.
+    fishes[key] = updatedFish;
+    // 3. Set the state.
+    this.setState({fishes});
+  }
+
   loadSampleFishes = () => {
     this.setState({
       fishes: sampleFishes
@@ -76,7 +85,9 @@ class App extends React.Component {
            {/* Passing the addFish method to the Inventory component. */}
         <Inventory 
           addFish={this.addFish}
+          updateFish={this.updateFish}
           loadSampleFishes={this.loadSampleFishes}
+          fishes={this.state.fishes}
         />
       </div>
     );
