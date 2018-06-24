@@ -4,6 +4,7 @@ import Order from "./Order";
 import Inventory from "./Inventory";
 import Fish from "./Fish"; 
 import sampleFishes from "../sample-fishes";
+import base from "../base";
 
 class App extends React.Component {
 
@@ -11,6 +12,20 @@ class App extends React.Component {
     fishes: {},
     order: {}
   };
+
+  // This life- cycle method syncs the state of the data to Firebase.
+  componentDidMount() {
+    const { params } = this.props.match;
+    this.ref = base.syncState(`${params.storeId}/fishes`, {
+      context: this,
+      state: 'fishes'
+    });
+  }
+
+  // This life-cycle method triggers an unmount.  
+  componentWillUnmount() {
+    base.removeBinding(this.ref);
+  }
 
   addFish = fish => {
     // 1. Makes a copy of the existing state using an object spread.
@@ -46,7 +61,7 @@ class App extends React.Component {
             <Fish key={key} index={key} details={this.state.fishes[key]} addToOrder={this.addToOrder}/>)}          
           </ul>
         </div>
-        <Order />
+        <Order fishes={this.state.fishes} order={this.state.order}/>
            {/* Passing the addFish method to the Inventory component. */}
         <Inventory 
           addFish={this.addFish}
