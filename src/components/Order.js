@@ -10,16 +10,18 @@ class Order extends React.Component {
 
     // If fish are not yet loaded, don't send any information to the Order component.
     if (!fish) return null;
-    
+
     if (!isAvailable) {
       return <li key={key}> Sorry {fish ? fish.name : "fish"} is no longer available </li>;
     }
 
-    return (<li key={key}>
-              {quantity} lbs {fish.name}
-              {formatPrice(quantity * fish.price)}
-            </li>
-    )
+    return (
+      <li key={key}>
+        {quantity} lbs {fish.name}
+        {formatPrice(quantity * fish.price)}
+        <button onClick={() => this.props.removeFromOrder(key)}>&times;</button>
+      </li>
+    );
   };
 
   render() {
