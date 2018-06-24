@@ -16,16 +16,27 @@ class App extends React.Component {
   // This life- cycle method syncs the state of the data to Firebase.
   componentDidMount() {
     const { params } = this.props.match;
+    // First reinstate our localstorage
+    const localStorageRef = localStorage.getItem(params.storeId);
+    if (localStorageRef) {
+      this.setState({ order: JSON.parse(localStorageRef) })
+    }
     this.ref = base.syncState(`${params.storeId}/fishes`, {
       context: this,
       state: 'fishes'
     });
   }
 
+  componentDidUpdate() {
+    console.log(this.state.order)
+    localStorage.setItem(this.props.match.params.storeId, JSON.stringify(this.state.order))
+  }
+
   // This life-cycle method triggers an unmount.  
   componentWillUnmount() {
     base.removeBinding(this.ref);
   }
+
 
   addFish = fish => {
     // 1. Makes a copy of the existing state using an object spread.
