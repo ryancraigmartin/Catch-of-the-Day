@@ -15,7 +15,26 @@ class Inventory extends React.Component {
     loadSampleFishes: PropTypes.func
   }
 
+  state = {
+    uid: null,
+    owner: null
+  }
+
   authHandler = async (authData) => {
+    // 1. Look up the current store in the Firebase database.
+    const store = await base.fetch(this.props.storeId, {context: this})
+    console.log(store)
+    // 2. Claim it if there isn't already an owner of the store and set the uid as part of the owner property.
+    if (!store.owner) {
+      await base.post(`${this.props.storeId}/owner`, {
+        data: authData.user.uid // Part of the user payload received upon authentication.
+      })
+    }
+    // 3. Set the sate of the inventory to reflect the current user.
+    this.setState({
+      uid: authData.user.uid,
+      owner: store.owner || authData.user.uid
+    });
     console.log(authData)
 
   }
@@ -26,11 +45,36 @@ class Inventory extends React.Component {
     .then(this.authHandler)
   }
 
+  logout = async () => {
+    console.log('logout!')
+    await firebase.auth().signOut();
+    this.setState({uid: null})
+  }
+
   render() {
-    return <Login authenticate={this.authenticate}/>
+
+    const logout = <button onClick={this.logout}>Log Out</button>
+
+    // 1. Check if the user is currently logged in.
+    if (!this.state.uid) {
+      return <Login authenticate={this.authenticate}/>
+    }
+
+    // 2. Check if they are not the owner of the store.
+    if (this.state.uid !== this.state.owner) {
+      return (
+      <div> 
+        <p>Sorry! You're not the owner of this store.</p>
+        {logout} 
+      </div>
+      )
+    }
+
+    // If they are the owner, render the inventory.
     return (
       <div className="inventory">
         <h2>Inventory</h2>
+        {logout}         
         {Object.keys(this.props.fishes).map(key => (
           <EditFishForm 
             key={key} 
