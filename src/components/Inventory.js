@@ -27,7 +27,7 @@ class Inventory extends React.Component {
   }
 
   render() {
-    return <Login/>
+    return <Login authenticate={this.authenticate}/>
     return (
       <div className="inventory">
         <h2>Inventory</h2>
