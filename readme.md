@@ -1,5 +1,5 @@
 
-[Live Demo](https://tender-archimedes-87faf3.netlify.com/)
+[Live Demo hosted by *Netlify*](https://tender-archimedes-87faf3.netlify.com/)
 
 ---
 
