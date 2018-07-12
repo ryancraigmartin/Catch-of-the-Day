@@ -8,16 +8,18 @@ import base, { firebaseApp } from "../base";
 
 class Inventory extends React.Component { 
 
-  static PropTypes = {
-    fishes:  PropTypes.object,
-    updateFish: PropTypes.func,
-    deleteFish: PropTypes.func,
-    loadSampleFishes: PropTypes.func
-  }
-
   state = {
     uid: null,
     owner: null
+  }
+
+  // Will log you back in if previously signed in before refresh takes place.
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.authHandler({user});
+      }
+    })
   }
 
   authHandler = async (authData) => {
@@ -63,7 +65,7 @@ class Inventory extends React.Component {
     // 2. Check if they are not the owner of the store.
     if (this.state.uid !== this.state.owner) {
       return (
-      <div> 
+      <div>   
         <p>Sorry! You're not the owner of this store.</p>
         {logout} 
       </div>
@@ -91,6 +93,13 @@ class Inventory extends React.Component {
       </div>
     );
   }
+}
+
+Inventory.PropTypes = {
+  fishes:  PropTypes.object,
+  updateFish: PropTypes.func,
+  deleteFish: PropTypes.func,
+  loadSampleFishes: PropTypes.func
 }
 
 export default Inventory;
