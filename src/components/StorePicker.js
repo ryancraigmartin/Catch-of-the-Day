@@ -5,10 +5,6 @@ import PropTypes from "prop-types"
 
 class StorePicker extends React.Component {
 
-  static PropTypes = {
-    history: PropTypes.object
-  }
-
   // Property on the component made into a ref.
   storeName = React.createRef();
 
@@ -35,6 +31,10 @@ class StorePicker extends React.Component {
       </form>
     )
   }
+}
+
+StorePicker.PropTypes = {
+  history: PropTypes.object
 }
 
 export default StorePicker;

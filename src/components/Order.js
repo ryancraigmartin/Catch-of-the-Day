@@ -3,14 +3,7 @@ import PropTypes from "prop-types"
 import { formatPrice } from "../helpers"
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
-
 class Order extends React.Component {
-
-  static PropTypes = {
-    fishes: PropTypes.object,
-    order:  PropTypes.object,
-    removeFromOrder: PropTypes.func
-  }
 
   renderOrder = (key) => {
     const fish = this.props.fishes[key];
@@ -81,6 +74,12 @@ class Order extends React.Component {
     </div>
     )
   }
+}
+
+Order.PropTypes = {
+  fishes: PropTypes.object.isRequired,
+  order:  PropTypes.object.isRequired,
+  removeFromOrder: PropTypes.func.isRequired
 }
 
 export default Order;
